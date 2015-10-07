@@ -786,6 +786,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         
         [self.hudView addSubview:self.indefiniteAnimatedView];
         [self.hudView addSubview:self.indeterminateAnimatedView];
+        self.indefiniteAnimatedView.hidden = YES;
 
         if([self.indefiniteAnimatedView respondsToSelector:@selector(startAnimating)]) {
             [(id)self.indefiniteAnimatedView startAnimating];
