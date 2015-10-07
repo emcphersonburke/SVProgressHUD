@@ -342,9 +342,9 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 }
 
 - (void)updateHUDFrame{
-    CGFloat hudWidth = 100.0f;
-    CGFloat hudHeight = 100.0f;
-    CGFloat stringHeightBuffer = 20.0f;
+    CGFloat hudWidth = 65.0f;
+    CGFloat hudHeight = 65.0f;
+    CGFloat stringHeightBuffer = 5.0f;
     CGFloat stringAndContentHeightBuffer = 80.0f;
     CGRect labelRect = CGRectZero;
     
@@ -386,21 +386,21 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         if(stringWidth > hudWidth){
             hudWidth = ceilf(stringWidth/2)*2;
         }
-        CGFloat labelRectY = (imageUsed || progressUsed) ? 68.0f : 9.0f;
+        CGFloat labelRectY = (imageUsed || progressUsed) ? 67.0f : 9.0f;
         if(hudHeight > 100.0f){
-            labelRect = CGRectMake(12.0f, labelRectY, hudWidth, stringHeight);
+            labelRect = CGRectMake(12.0f, labelRectY, 90.0f, stringHeight);
             hudWidth += 24.0f;
         } else{
             hudWidth += 24.0f;
-            labelRect = CGRectMake(0.0f, labelRectY, hudWidth, stringHeight);
+            labelRect = CGRectMake(0.0f, labelRectY, 90.0f, stringHeight);
         }
     }
     // Update values on subviews
-    self.hudView.bounds = CGRectMake(0.0f, 0.0f, hudWidth, hudHeight);
+    self.hudView.bounds = CGRectMake(0.0f, 0.0f, 90.0f, 90.0f);
     [self updateBlurBounds];
     
     if(string){
-        self.imageView.center = CGPointMake(CGRectGetWidth(self.hudView.bounds)/2, 36.0f);
+        self.imageView.center = CGPointMake(CGRectGetWidth(self.hudView.bounds)/2, 37.0f);
     } else{
        	self.imageView.center = CGPointMake(CGRectGetWidth(self.hudView.bounds)/2, CGRectGetHeight(self.hudView.bounds)/2);
     }
@@ -1138,7 +1138,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 
 - (UIImageView*)imageView{
     if(!_imageView){
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 28.0f, 28.0f)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 50.0f, 50.0f)];
     }
     if(!_imageView.superview){
         [self.hudView addSubview:_imageView];
