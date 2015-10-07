@@ -12,6 +12,7 @@
 #import "SVProgressHUD.h"
 #import "SVIndefiniteAnimatedView.h"
 #import "SVRadialGradientLayer.h"
+#import "SGIndeterminateAnimationView.h"
 
 NSString * const SVProgressHUDDidReceiveTouchEventNotification = @"SVProgressHUDDidReceiveTouchEventNotification";
 NSString * const SVProgressHUDDidTouchDownInsideNotification = @"SVProgressHUDDidTouchDownInsideNotification";
@@ -39,6 +40,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIView *indefiniteAnimatedView;
 @property (nonatomic, strong) CALayer *backgroundLayer;
+@property (nonatomic, strong) SGIndeterminateAnimationView *indeterminateAnimatedView;
 
 @property (nonatomic, readwrite) CGFloat progress;
 @property (nonatomic, readwrite) NSUInteger activityCount;
@@ -435,6 +437,9 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         CGPoint center = CGPointMake((CGRectGetWidth(self.hudView.bounds)/2), CGRectGetHeight(self.hudView.bounds)/2);
         self.indefiniteAnimatedView.center = center;
         
+        self.indeterminateAnimatedView.frame = self.hudView.bounds;
+        [self.indeterminateAnimatedView startAnimating];
+        
         if(self.progress != SVProgressHUDUndefinedProgress){
             self.backgroundRingLayer.position = self.ringLayer.position = CGPointMake((CGRectGetWidth(self.hudView.bounds)/2), CGRectGetHeight(self.hudView.bounds)/2);
         }
@@ -764,6 +769,8 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         self.imageView.hidden = NO;
         
         [self.indefiniteAnimatedView removeFromSuperview];
+        [self.indeterminateAnimatedView removeFromSuperview];
+        
         if([self.indefiniteAnimatedView respondsToSelector:@selector(stopAnimating)]) {
             [(id)self.indefiniteAnimatedView stopAnimating];
         }
@@ -778,6 +785,8 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         [self cancelRingLayerAnimation];
         
         [self.hudView addSubview:self.indefiniteAnimatedView];
+        [self.hudView addSubview:self.indeterminateAnimatedView];
+
         if([self.indefiniteAnimatedView respondsToSelector:@selector(startAnimating)]) {
             [(id)self.indefiniteAnimatedView startAnimating];
         }
@@ -863,6 +872,8 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     self.stringLabel.text = string;
     [self updateHUDFrame];
     [self.indefiniteAnimatedView removeFromSuperview];
+    [self.indeterminateAnimatedView removeFromSuperview];
+
     if([self.indefiniteAnimatedView respondsToSelector:@selector(stopAnimating)]) {
         [(id)self.indefiniteAnimatedView stopAnimating];
     }
@@ -924,6 +935,9 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
                                  [_indefiniteAnimatedView removeFromSuperview];
                                  _indefiniteAnimatedView = nil;
                                  
+                                 [_indeterminateAnimatedView removeFromSuperview];
+                                 _indeterminateAnimatedView = nil;
+                                 
                                  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
                                  
                                  [[NSNotificationCenter defaultCenter] postNotificationName:SVProgressHUDDidDisappearNotification
@@ -950,6 +964,13 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     [self dismissWithDelay:0];
 }
 
+
+- (SGIndeterminateAnimationView *)indeterminateAnimatedView {
+    if (_indeterminateAnimatedView == nil) {
+        _indeterminateAnimatedView = [[SGIndeterminateAnimationView alloc] initWithFrame:CGRectZero];
+    }
+    return _indeterminateAnimatedView;
+}
 
 #pragma mark - Ring progress animation
 
