@@ -458,6 +458,9 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
             
             self.backgroundLayer = [CALayer layer];
             self.backgroundLayer.frame = self.bounds;
+            if( CGRectGetWidth( self.backgroundLayer.frame ) == 0 )
+                self.backgroundLayer.frame = UIScreen.mainScreen.bounds;
+            
             self.backgroundLayer.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5].CGColor;
             CGPoint gradientCenter = self.center;
             gradientCenter.y = (self.bounds.size.height - self.visibleKeyboardHeight) / 2;
