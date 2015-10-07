@@ -399,7 +399,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     }
     // Update values on subviews
     self.hudView.bounds = CGRectMake(0.0f, 0.0f, 90.0f, 90.0f);
-    [self updateBlurBounds];
+//    [self updateBlurBounds];
     
     if(string){
         self.imageView.center = CGPointMake(CGRectGetWidth(self.hudView.bounds)/2, 37.0f);
@@ -861,15 +861,15 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         [self.class show];
     }
     
-    UIColor *tintColor = self.foregroundColorForStyle;
-    if([self.imageView respondsToSelector:@selector(setTintColor:)]){
-        if (image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
-            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        }
-        self.imageView.tintColor = tintColor;
-    } else{
-        image = [self image:image withTintColor:tintColor];
-    }
+//    UIColor *tintColor = self.foregroundColorForStyle;
+//    if([self.imageView respondsToSelector:@selector(setTintColor:)]){
+//        if (image.renderingMode != UIImageRenderingModeAlwaysTemplate) {
+//            image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//        }
+//        self.imageView.tintColor = tintColor;
+//    } else{
+//        image = [self image:image withTintColor:tintColor];
+//    }
     self.imageView.image = image;
     self.imageView.hidden = NO;
     
